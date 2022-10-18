@@ -39,7 +39,12 @@ public class ShoppingListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String name = request.getParameter("name");
+
+        if (name != null) {
+            request.getSession().setAttribute("name", name);
+        }
+        this.getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
     }
 
 }
