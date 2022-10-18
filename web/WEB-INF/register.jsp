@@ -18,9 +18,9 @@
             <input type="hidden" name="action" value="register">
             <label>
                 Name: 
-                <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" required>
             </label>
-            <button type="submit">Submit</button>
+            <button type="submit">Register Name</button>
         </form>
     </body>
 </html>

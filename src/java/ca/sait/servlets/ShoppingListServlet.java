@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,14 +27,22 @@ public class ShoppingListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            String name = request.getParameter("name");
 
-        String name = (String) request.getSession().getAttribute("name");
+            String action = request.getParameter("action");
 
-        if (name != null) {
-            this.getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
-        } else {
-            this.getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-        }
+            if (action != null && action.equals("logout")) {
+                request.getSession().invalidate();
+                response.sendRedirect("shoppingList");
+                return;
+            }
+            if (name != null) {
+                this.getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+            } else {
+                this.getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+            }
+
+
         
     }
 

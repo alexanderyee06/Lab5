@@ -14,16 +14,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello, <c:out value="${name}"/>!</h1>
-        
-        <h1>List</h1>
+        <h1>Shopping List</h1>
+        <p>Hello, <c:out value="${name}"/>!</p><a href="shoppingList?action=logout">Logout</a>
         
         <form action="shoppingList" method="post">
             <input type="hidden" name="action" value="add">
-            <label>Item: <input ype="text" name="item"></label>
-            <button type="submit">Submit</button>
+            <label>Add Item: <input ype="text" name="item"></label>
+            <button type="submit">Add</button>
         </form>
-        <br>
         <br>
         <form action="shoppingList" method="post">
             <input type="hidden" name="action" value="delete">
