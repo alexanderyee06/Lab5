@@ -14,6 +14,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello <c:out value="${name}"/>!</h1>
+        <h1>Hello, <c:out value="${name}"/>!</h1>
+        
+        <h1>List</h1>
+        
+        <form action="shoppingList" method="post" >
+            <input type="hidden" name="action" value="add">
+            <label>Item: <input ype="text" name="item"></label>
+            <button type="submit">Submit</button>
+        </form>
+        
+        <c:forEach var="item" items="${items}">
+            ${item}
+        </c:forEach>
     </body>
 </html>

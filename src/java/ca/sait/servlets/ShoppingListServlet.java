@@ -2,6 +2,7 @@ package ca.sait.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,15 @@ public class ShoppingListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+
+        String name = (String) request.getSession().getAttribute("name");
+
+        if (name != null) {
+            this.getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+        } else {
+            this.getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+        }
+        
     }
 
     /**
@@ -39,12 +48,25 @@ public class ShoppingListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
+        String action = request.getParameter("action");
 
-        if (name != null) {
-            request.getSession().setAttribute("name", name);
+        if (action.equals("register")) {
+            String name = request.getParameter("name");
+
+            if (name != null) {
+                request.getSession().setAttribute("name", name);
+                request.getSession().setAttribute("items", new ArrayList<String>());
+            }
+            
+        } else if (action.equals("add")) {
+            String item = request.getParameter("item");
+
+            ArrayList<String> items = (ArrayList<String>) request.getSession().getAttribute("items");
+
+            items.add(item);
+            request.getSession().setAttribute("items", items);
         }
+        
         this.getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
     }
-
 }
